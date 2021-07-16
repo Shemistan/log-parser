@@ -1,25 +1,23 @@
-# -*- coding: utf-8 -*-
-# Имеется файл events.txt
-# Напишите программу, которая считывает файл +
-# и выводит число событий NOK за каждую минуту в другой файл в формате +
-# [2018-05-17 01:57] 1234
-# [2018-05-17 01:58] 4321
-# Входные параметры: файл для анализа, файл результата
-# Требования к коду: он должен быть готовым к расширению функциональности. Делать сразу на классах.
-# После выполнения первого этапа нужно сделать группировку событий
-#  - по часам
-#  - по месяцу
-#  - по году
-
-
 class Analyzer:
+    """log analyzer
+
+    The program reads the file and outputs
+    the number of NOK events per minute
+    to another file in a convenient format,
+    having previously grouped by hours, months, years.
+
+        Input data
+    file_name -------------- filename to scan
+    write_file_name -------- filename to write
+
+    """
 
     def __init__(self, file_name, write_file_name=None):
         self.file_name = file_name
         self.write_file_name = write_file_name
         self.stat = {}
 
-    # Создание словаря с заданными условиями
+    # Creating a dictionary with specified conditions
     def creating_a_list_of_events(self):
 
         with open(self.file_name, 'r', encoding='UTF8') as file:
@@ -32,7 +30,7 @@ class Analyzer:
                     else:
                         self.stat[data] = 1
 
-    # Запись отсортированного словаря в файл
+    # Writing a sorted dictionary to a file
     def write_to_file(self):
         if self.write_file_name == None:
             self.write_file_name = 'NOK_' + self.file_name
@@ -66,8 +64,6 @@ class Analyzer:
                 grouped_data[sort_value] = {}
                 grouped_data[sort_value].update({i: self.stat[i]})
 
-        # for i, n in grouped_data.items():
-        #     print(i, n, '\n')
         self.write_grouping(grouped_data)
 
     def write_grouping(self, dict):
